@@ -1,27 +1,75 @@
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'f9a1920db6msh3c30d912dae7432p1b9db9jsn2ab8ea5181e3',
-		'X-RapidAPI-Host': 'deezerdevs-deezer.p.rapidapi.com'
-	}
-};
+// https://striveschool-api.herokuapp.com/api/deezer/search
 
-// https://deezerdevs-deezer.p.rapidapi.com/search?q=[YOUR_STRING]
 
-const urlMetlallica = "https://deezerdevs-deezer.p.rapidapi.com/search?q=metallica";
+let pink = document.getElementById("pink");
+let listOfAlbums = [];
+let listOfSongs= [];
 
-fetch(urlMetlallica, options)
+const getPink = () => {
+    fetch('https://striveschool-api.herokuapp.com/api/deezer/search?q=pinkfloyd')
 	.then(response => response.json())
-	.then(album => console.log(album))
+    .then(response => renderAlbum(response.data, pink))
 	.catch(err => console.error(err));
+}
+const renderAlbum = (fetchedAlbum, location) => {
+    let album = document.createElement("div");
+    album.innerHTML+=`<h2>Pink Floyd</h2>`
+    for(let i = 0; i < fetchedAlbum.length; i++){
+        album.innerHTML+=`<li><img><img src="${fetchedAlbum[i].album.cover}">${fetchedAlbum[i].title}</li>`
+        listOfAlbums.push(fetchedAlbum[i].album.cover);
+        listOfAlbums.push(fetchedAlbum[i].title);
+    }
+    album.innerHTML+=""
+    location.appendChild(album);
+}
 
-const creatAlbums = (album) => {
-    let pinkFloydRow = document.querySelector("#pinkFloydList");
-   let dataArray = album.data;
-   for (let i = 0; i < dataArray.length; i++) {
-    
-    
-   }
-}   
+let daft = document.getElementById("daft");
+listOfAlbums = [];
+listOfSongs= [];
+
+const getDaft = () => {
+    fetch('https://striveschool-api.herokuapp.com/api/deezer/search?q=daftpunk')
+	.then(response => response.json())
+    .then(response => renderSecondAlbum(response.data, daft))
+	.catch(err => console.error(err));
+}
+const renderSecondAlbum = (fetchedAlbum, location) => {
+    let album = document.createElement("div");
+    album.innerHTML+=`<h2>Daft Punk</h2>`
+    for(let i = 0; i < fetchedAlbum.length; i++){
+        album.innerHTML+=`<li><img><img src="${fetchedAlbum[i].album.cover}">${fetchedAlbum[i].title}</li>`
+        listOfAlbums.push(fetchedAlbum[i].album.cover);
+        listOfAlbums.push(fetchedAlbum[i].title);
+    }
+    album.innerHTML+=""
+    location.appendChild(album);
+}
+
+let metallica = document.getElementById("metallica");
+listOfAlbums = [];
+listOfSongs= [];
+
+const getMetallica = () => {
+    fetch('https://striveschool-api.herokuapp.com/api/deezer/search?q=metalicca')
+	.then(response => response.json())
+    .then(response => renderThirdAlbum(response.data, metallica))
+	.catch(err => console.error(err));
+}
+const renderThirdAlbum = (fetchedAlbum, location) => {
+    let album = document.createElement("div");
+    album.innerHTML+=`<h2>Metallica</h2>`
+    for(let i = 0; i < fetchedAlbum.length; i++){
+        album.innerHTML+=`<li><img><img src="${fetchedAlbum[i].album.cover}">${fetchedAlbum[i].title}</li>`
+        listOfAlbums.push(fetchedAlbum[i].album.cover);
+        listOfAlbums.push(fetchedAlbum[i].title);
+    }
+    album.innerHTML+=""
+    location.appendChild(album);
+}
 
 
+window.onload = function(){
+    getPink();
+    getDaft();
+    getMetallica();
+}
